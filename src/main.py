@@ -48,6 +48,8 @@ def serve(path):
             return "index.html not found", 404
 
 if __name__ == "__main__":
+    with app.app_context():
+        db.create_all()
     app.run(
         host=app.config.get("FLASK_HOST", "0.0.0.0"),
         port=app.config.get("FLASK_PORT", 5000),
