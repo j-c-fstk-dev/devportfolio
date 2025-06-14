@@ -15,7 +15,11 @@ app = Flask(__name__, static_folder=os.path.join(os.path.dirname(__file__), "sta
 app.config.from_pyfile(CONFIG_PATH)
 
 # Configurar CORS com origens permitidas
-CORS(app, resources={r"/api/*": {"origins": app.config.get("CORS_ORIGINS", ["*"])}}, supports_credentials=True)
+CORS(
+    app, 
+    resources={r"/api/*": {"origins": ["https://j-c-fstk-dev.github.io/devportfolio"]}},
+    supports_credentials=True
+)
 
 # Inicializar extensões
 db.init_app(app)
