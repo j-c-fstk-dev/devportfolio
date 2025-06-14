@@ -6,7 +6,7 @@ FLASK_PORT = int(os.getenv("FLASK_PORT", 5000))  # 5000 é padrão para produç�
 FLASK_DEBUG = os.getenv("FLASK_DEBUG", "False").lower() == "true"
 
 # Configuração do Banco de Dados
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///portfolio.db")
+SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "sqlite:///portfolio.db")
 
 # CORS
 CORS_ORIGINS_STR = os.getenv("CORS_ORIGINS", "*")
