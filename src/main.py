@@ -6,7 +6,7 @@ from src.models.user import db
 from src.routes.contact import contact_bp
 from src.routes.user import user_bp
 
-# Caminho absoluto para o config.py, ajusta conforme sua estrutura
+# Caminho absoluto para o config.py, ajuste conforme sua estrutura
 CONFIG_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "config.py")
 
 app = Flask(__name__, static_folder=os.path.join(os.path.dirname(__file__), "static"))
@@ -21,14 +21,13 @@ CORS(app, resources={r"/api/*": {"origins": app.config.get("CORS_ORIGINS", ["*"]
 db.init_app(app)
 mail = Mail(app)
 
+# Criação das tabelas ao subir o app (Flask 3+ não tem mais before_first_request)
+with app.app_context():
+    db.create_all()
+
 # Registrar blueprints
 app.register_blueprint(contact_bp, url_prefix="/api")
 app.register_blueprint(user_bp, url_prefix="/api")
-
-# Criar tabelas no banco antes da primeira requisição (apenas para dev/teste rápido, use migrações em produção)
-@app.before_first_request
-def create_tables():
-    db.create_all()
 
 # Servir arquivos estáticos (frontend)
 @app.route("/", defaults={"path": ""})
@@ -48,8 +47,6 @@ def serve(path):
             return "index.html not found", 404
 
 if __name__ == "__main__":
-    with app.app_context():
-        db.create_all()
     app.run(
         host=app.config.get("FLASK_HOST", "0.0.0.0"),
         port=app.config.get("FLASK_PORT", 5000),
