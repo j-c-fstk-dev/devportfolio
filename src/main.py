@@ -17,7 +17,7 @@ app.config.from_pyfile(CONFIG_PATH)
 # Configurar CORS com origens permitidas
 CORS(
     app, 
-    resources={r"/api/*": {"origins": ["https://j-c-fstk-dev.github.io/devportfolio"]}},
+    resources={r"/api/*": {"origins": ["https://j-c-fstk-dev.github.io"]}},
     supports_credentials=True
 )
 
